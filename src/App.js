@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Login from "./component/login";
+import MoviePage from "./component/MoviePage";
+import UserContext from "./context/userContext";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  handleLoggIn = (userInfo) => {
+    console.log("Getting username from a Form ", userInfo);
+    const user = { name: "Rahul" };
+    this.setState({ currentUser: user });
+  };
+
+  state = { currentUser: null };
+  render() {
+    return (
+      <>
+        <UserContext.Provider
+          value={{
+            currentUser: this.state.currentUser,
+            onLoggedIn: this.handleLoggIn,
+          }}>
+          <MoviePage />
+          <Login />
+        </UserContext.Provider>
+      </>
+    );
+  }
 }
 
 export default App;
